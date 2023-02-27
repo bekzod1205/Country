@@ -3,6 +3,7 @@ package uz.itschool
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.core.widget.addTextChangedListener
 import uz.itschool.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -14,6 +15,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         createUser()
 
+        var p = intent.getStringExtra("population")
+        var a = intent.getStringExtra("area")
+        var i = intent.getIntExtra("index",-1)
+        if (i!=-1){
+            list.get(i).population=p.toString()
+            list.get(i).area=a.toString()
+        }
         var adapter = Adapter(this, list)
         binding.main.adapter = adapter
 
@@ -23,9 +31,17 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra("user", user)
             startActivity(intent)
         }
-        binding.fav.setOnClickListener {
-            val intent = Intent(this, FavActivity::class.java)
-            startActivity(intent)
+        binding.search.addTextChangedListener {
+            var filter = mutableListOf<User>()
+            if (it != null) {
+                for (c in list) {
+                    if (c.name.contains(it.toString())) {
+                        filter.add(c)
+                    }
+                }
+                adapter = Adapter(this, filter)
+                binding.main.adapter = adapter
+            }
         }
 
     }

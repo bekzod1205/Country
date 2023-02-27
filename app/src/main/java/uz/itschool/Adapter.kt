@@ -59,10 +59,6 @@ class Adapter(context: Context, var users: MutableList<User>) :
             dialog.show()
         }
 
-        binding.fav.setOnClickListener {
-            val intent = Intent(context, FavActivity::class.java)
-            intent.putExtra("fav", user)
-        }
         binding.name.text = user.name
         binding.population.text = user.population
         binding.area.text = user.area
