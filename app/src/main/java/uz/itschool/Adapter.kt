@@ -2,13 +2,11 @@ package uz.itschool
 
 import android.app.Dialog
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.ArrayAdapter
-import android.widget.BaseAdapter
 import android.widget.Button
 import android.widget.TextView
 import coil.load
@@ -24,13 +22,13 @@ class Adapter(context: Context, var users: MutableList<User>) :
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        var binding: ItemUserBinding
+        val binding: ItemUserBinding
         if (convertView == null) {
             binding = ItemUserBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         } else {
             binding = ItemUserBinding.bind(convertView)
         }
-        val user = users.get(position)
+        val user = users[position]
         binding.img.load(user.img) {
             placeholder(R.drawable.ic_launcher_background)
             error(androidx.appcompat.R.drawable.abc_btn_radio_material_anim)
